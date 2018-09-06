@@ -6,8 +6,16 @@
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:colorControlHighlight">@color/colorHighlight</item>
-        <item name="android:windowTranslucentStatus">true</item>
+
+
     </style>
+
+
+    <style name="ToolbarColoredBackArrow" parent="AppTheme.Base">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+
 
 
 

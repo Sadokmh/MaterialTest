@@ -1,18 +1,38 @@
 package com.example.sadokmm.materialtest;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.zip.Inflater;
+
+import tabs.SlidingTabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private ViewPager mPager;
+    private SlidingTabLayout mTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +47,33 @@ public class MainActivity extends AppCompatActivity {
            NavigationDrawerFragment drawerFragment=(NavigationDrawerFragment)
                    getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
            drawerFragment.settUp(R.id.fragment_navigation_drawer,(DrawerLayout)findViewById(R.id.drawerLayout),toolbar);
+
+
+           //Pager for tabs
+            mPager=(ViewPager)findViewById(R.id.pager);
+
+            mPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+            mTabs=(SlidingTabLayout)findViewById(R.id.tabs);
+
+            //Make all fragment and icons in 1 page
+            mTabs.setDistributeEvenly(true);
+
+            //Put the icons title
+            mTabs.setCustomTabView(R.layout.custom_tab_view,R.id.tabText);
+
+            //Change bottom bar color (under icons)
+           /* mTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+                @Override
+                public int getIndicatorColor(int position) {
+                    return getResources().getColor(R.color.backColor);
+                }
+            });*/
+
+           mTabs.setBackground(getResources().getDrawable(R.color.colorPrimary));
+           mTabs.setSelectedIndicatorColors(R.color.colorAccent);
+
+            mTabs.setViewPager(mPager);
+
 
 
     }
@@ -54,4 +101,85 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
+    // Pager Adapter Class for View pager
+
+
+    public class MyPagerAdapter extends FragmentPagerAdapter {
+
+
+        String[] tabs=getResources().getStringArray(R.array.tabs);
+        int[] icons= {R.drawable.ic_photo_white , R.drawable.ic_video_white , R.drawable.ic_location_white};
+
+
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            //GET ICONS tabs
+            Drawable drawable=getResources().getDrawable(icons[position]);
+            drawable.setBounds(0,0,36,36);
+            ImageSpan imageSpan=new ImageSpan(drawable);
+            SpannableString spannableString=new SpannableString(" ");
+            spannableString.setSpan(imageSpan,0,spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+            return spannableString;
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            MyFragment myFragment=MyFragment.getInstance(i);
+            return myFragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+    }
+
+
+
+
+    // Fragment class
+
+
+    public static class MyFragment extends Fragment {
+
+        private TextView textView;
+
+        public static MyFragment getInstance( int position ){
+
+            MyFragment myFragment=new MyFragment();
+            Bundle args=new Bundle();
+            args.putInt("position" , position);
+            myFragment.setArguments(args);
+            return  myFragment;
+        }
+
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+            View layout= inflater.inflate(R.layout.fragment_my,container,false);
+            textView=(TextView)layout.findViewById(R.id.position);
+            Bundle bundle=getArguments();
+            if (bundle != null ){
+                textView.setText("The page selected is " + bundle.getInt("position"));
+            }
+            return  layout;
+        }
+    }
+
 }

@@ -19,7 +19,8 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_home"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginRight="16dp"
+            />
 
     <TextView
         android:id="@+id/listText"
@@ -27,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="72dp"
-        android:text="Sadok Mhiri" />
+        android:text="Sadok Mhiri"
+        android:textColor="@color/white" />
 
     </RelativeLayout>
 

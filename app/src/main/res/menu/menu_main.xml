@@ -13,9 +13,10 @@
     <item
         android:id="@+id/navigate"
         android:title="@string/next"
-        android:icon="@drawable/ic_next"
+        android:icon="@drawable/ic_next_white"
         android:orderInCategory="200"
-        app:showAsAction="always">
+        app:showAsAction="always"
+        >
 
     </item>
 
