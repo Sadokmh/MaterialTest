@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="?android:attr/colorControlHighlight">
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:color="?android:attr/colorControlHighlight">
 
-    <item android:id="@+id/mask" android:drawable="@color/white"/>
+   <item android:state_selected="true">
+       <shape>
+           <solid android:color="@color/colorPrimaryDark"></solid>
+       </shape>
+   </item>
+
+    <item>
+        <shape>
+            <solid android:color="@color/colorPrimary"></solid>
+        </shape>
+    </item>
 
 
-</ripple>
+</selector>

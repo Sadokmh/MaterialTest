@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
             mPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
             mTabs=(SlidingTabLayout)findViewById(R.id.tabs);
 
-            //Make all fragment and icons in 1 page
-            mTabs.setDistributeEvenly(true);
+        //Make all fragment and icons in 1 page
+        mTabs.setDistributeEvenly(true);
 
             //Put the icons title
             mTabs.setCustomTabView(R.layout.custom_tab_view,R.id.tabText);
@@ -69,8 +69,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });*/
 
-           mTabs.setBackground(getResources().getDrawable(R.color.colorPrimary));
-           mTabs.setSelectedIndicatorColors(R.color.colorAccent);
+
+
+
+
+           mTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+               @Override
+               public int getIndicatorColor(int position) {
+                   return getResources().getColor(R.color.colorAccent);
+               }
+           });
+
 
             mTabs.setViewPager(mPager);
 
@@ -97,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
 
         if ( id == R.id.navigate){
             startActivity(new Intent(this,subActivity.class));
+        }
+
+        if (id == R.id.tab ){
+            startActivity(new Intent(this,ActivityUsingTabLibrary.class));
         }
 
         return super.onOptionsItemSelected(item);
