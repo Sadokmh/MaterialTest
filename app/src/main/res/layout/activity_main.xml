@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".MainActivity">
+        tools:context=".activities.MainActivity">
 
 
         <include android:id="@+id/app_bar" layout="@layout/app_bar"/>
@@ -41,7 +41,7 @@
     <fragment
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:name="com.example.sadokmm.materialtest.NavigationDrawerFragment"
+        android:name="com.example.sadokmm.materialtest.fragments.NavigationDrawerFragment"
 
         android:id="@+id/fragment_navigation_drawer"
         android:layout_width="280dp"

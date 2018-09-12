@@ -1,7 +1,6 @@
-package com.example.sadokmm.materialtest;
+package com.example.sadokmm.materialtest.adapters;
 
 import android.content.Context;
-import android.icu.text.IDNA;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.sadokmm.materialtest.objects.Information;
+import com.example.sadokmm.materialtest.R;
 
 import java.util.Collections;
 import java.util.List;

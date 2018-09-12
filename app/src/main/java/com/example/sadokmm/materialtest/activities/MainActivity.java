@@ -1,8 +1,7 @@
-package com.example.sadokmm.materialtest;
+package com.example.sadokmm.materialtest.activities;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,16 +14,15 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.zip.Inflater;
+import com.example.sadokmm.materialtest.fragments.FragmentSearch;
+import com.example.sadokmm.materialtest.fragments.FragmentUpcoming;
+import com.example.sadokmm.materialtest.fragments.MyFragment;
+import com.example.sadokmm.materialtest.fragments.NavigationDrawerFragment;
+import com.example.sadokmm.materialtest.R;
 
 import tabs.SlidingTabLayout;
 
@@ -84,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
             mTabs.setViewPager(mPager);
 
 
+
+    }
+
+
+    //works with the addTouchListener of a recyclerView in NavigationDrawerFragment
+    public void OnDrawerItemClicked(int index){
+
+        mPager.setCurrentItem(index);
 
     }
 
@@ -152,7 +158,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int i) {
             MyFragment myFragment=MyFragment.getInstance(i);
+
             return myFragment;
+
+
         }
 
         @Override
@@ -167,32 +176,6 @@ public class MainActivity extends AppCompatActivity {
     // Fragment class
 
 
-    public static class MyFragment extends Fragment {
 
-        private TextView textView;
-
-        public static MyFragment getInstance( int position ){
-
-            MyFragment myFragment=new MyFragment();
-            Bundle args=new Bundle();
-            args.putInt("position" , position);
-            myFragment.setArguments(args);
-            return  myFragment;
-        }
-
-
-        @Nullable
-        @Override
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-            View layout= inflater.inflate(R.layout.fragment_my,container,false);
-            textView=(TextView)layout.findViewById(R.id.position);
-            Bundle bundle=getArguments();
-            if (bundle != null ){
-                textView.setText("The page selected is " + bundle.getInt("position"));
-            }
-            return  layout;
-        }
-    }
 
 }

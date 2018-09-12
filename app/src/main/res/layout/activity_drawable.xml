@@ -4,9 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.subActivity"
-    android:fitsSystemWindows="true"
-    >
-    <include android:id="@+id/app_bar" layout="@layout/app_bar"/>
+    tools:context=".activities.ActivityDrawable">
+
+    <ImageView
+        android:layout_width="375dp"
+        android:layout_height="524dp"
+        android:background="@drawable/ic_next"/>
+
+
 
 </android.support.constraint.ConstraintLayout>

@@ -7,4 +7,5 @@
     <color name="colorHighlight">#ff5f52</color>
     <color name="white">#FFFFFF</color>
     <color name="backColor">#e2c89b</color>
+    <color name="colorLight">#FF8A80</color>
 </resources>

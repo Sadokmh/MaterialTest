@@ -1,4 +1,4 @@
-package com.example.sadokmm.materialtest;
+package com.example.sadokmm.materialtest.activities;
 
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.example.sadokmm.materialtest.R;
 
 public class subActivity extends AppCompatActivity {
 

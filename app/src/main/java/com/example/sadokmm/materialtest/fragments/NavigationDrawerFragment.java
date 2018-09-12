@@ -1,20 +1,31 @@
-package com.example.sadokmm.materialtest;
+package com.example.sadokmm.materialtest.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.icu.text.IDNA;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toolbar;
+import android.widget.Toast;
+
+import com.example.sadokmm.materialtest.RecyclerTouchListener;
+import com.example.sadokmm.materialtest.activities.ActivityUsingTabLibrary;
+import com.example.sadokmm.materialtest.activities.MainActivity;
+import com.example.sadokmm.materialtest.adapters.AdapterDrawer;
+import com.example.sadokmm.materialtest.objects.Information;
+import com.example.sadokmm.materialtest.R;
+import com.example.sadokmm.materialtest.adapters.VivzAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +42,10 @@ public class NavigationDrawerFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
+    private RecyclerView mRecyclerDrawer;
+
     private VivzAdapter adapter;
+    private AdapterDrawer mAdapter;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -54,22 +68,53 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout=inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
         //get Data for Recycler View list
-        recyclerView = (RecyclerView)layout.findViewById(R.id.drawerList);
-        adapter=new VivzAdapter(getActivity(),getData());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+
+
         return layout;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+
+        recyclerView = (RecyclerView)view.findViewById(R.id.drawerList);
+        adapter=new VivzAdapter(getActivity(),getData());
+
+        mAdapter = new AdapterDrawer(getActivity(),getData());
+
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        /*recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                ((MainActivity) getActivity()).OnDrawerItemClicked(position-1);
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));*/
+
+
     }
 
     public static List<Information> getData(){
         List<Information> data=new ArrayList<>();
-        int[] icons = {R.drawable.ic_home_white , R.drawable.ic_person_white , R.drawable.ic_about_white , R.drawable.ic_logout_white };
+        int[] icons = {R.drawable.ic_home , R.drawable.ic_profile , R.drawable.ic_about , R.drawable.ic_logout };
         String[] titles= {"Home" , "Profile" , "About" , "Logout" };
 
         for (int i=0 ; i<icons.length && i<titles.length ; i++)
@@ -82,7 +127,7 @@ public class NavigationDrawerFragment extends Fragment {
         return data;
     }
 
-    public void settUp(int fragmentId, DrawerLayout drawerLayout , android.support.v7.widget.Toolbar toolbar) {
+    public void settUp(int fragmentId, DrawerLayout drawerLayout , final android.support.v7.widget.Toolbar toolbar) {
 
         containerView=getActivity().findViewById(fragmentId);
         mDrawerLayout=drawerLayout;
@@ -100,6 +145,14 @@ public class NavigationDrawerFragment extends Fragment {
 
             }
 
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                if (getActivity() instanceof ActivityUsingTabLibrary){
+                ((ActivityUsingTabLibrary) getActivity()).onDrawerSlide(slideOffset);
+                toolbar.setAlpha(1 - slideOffset/2);}
+            }
 
             @Override
             public void onDrawerClosed(View drawerView) {
